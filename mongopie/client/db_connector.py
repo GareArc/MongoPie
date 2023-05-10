@@ -1,4 +1,3 @@
-from crypt import methods
 import pymongo
 from pymongo import MongoClient, database
 import pymongo
@@ -22,6 +21,11 @@ class DBConnector:
         elif collection not in self.db.list_collection_names():
             raise Exception("Collection not found")
         return self.db[collection]
+    
+    def set_uri(self, uri: str) -> None:
+        if self._client is not None:
+            self._client.close()
+        self._client = MongoClient(uri)
     
     
         

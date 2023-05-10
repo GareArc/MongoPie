@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-mongopie = {editable = true, path = "."}
+mongopie = {extras = ["dev"], path = "."}
 
 [dev-packages]
 

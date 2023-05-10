@@ -1,29 +1,40 @@
-from typing import Type
-from mongopie.schema import MongoPieSchemaBase, FieldVariable
+from typing import Type, Any
+
+from pymongo.cursor import Cursor
+from .mongopie_schema import MongoPieSchemaBase
+from .field_variable import FieldVariable
 from mongopie.client import MongoPieClient
 
 
 class MongoPieModel:
-    def __init__(self, name: str, schema: Type[MongoPieSchemaBase]) -> None:
-        self._collection_name = name.capitalize()
+    def __init__(self, name: str, schema: MongoPieSchemaBase) -> None:
+        self._collection_name = name.lower()
         self._schema = schema
         
+    def _schema_check(self, document: dict[str, Any]) -> bool:
+        return self._schema._schema_check(document)
+    
+    def create_collection(self) -> None:
+        if not MongoPieClient.is_avaliable():
+            raise Exception("MongoPieClient is not connected to database")
         
-    def find(self, query: dict=None) -> list:        
+        MongoPieClient.get_collection(self._collection_name)
+        
+    def find(self, query: dict=None) -> Cursor:       
         return MongoPieClient.get_collection(self._collection_name).find(query)
     
     def find_one(self, query: dict=None) -> dict:
         return MongoPieClient.get_collection(self._collection_name).find_one(query)
     
-    def insert_one(self, document: MongoPieSchemaBase) -> None:
-        # check if document is the same type as schema
-        if not isinstance(document, self._schema):
-            raise Exception('document is not the same type as schema')
+    def insert_one(self, document: dict[str, Any]) -> None:
+        # schema check
+        if not self._schema_check(document):
+            raise Exception("Document does not match schema")
+        if not MongoPieClient.is_avaliable():
+            raise Exception("MongoPieClient is not connected to database")
         
-        # find all fields in schema
-        post = {}
-        for field_name, obj in document.get_fields():
-            post[field_name] = obj.value
+        MongoPieClient.get_collection(self._collection_name).insert_one(document)
+            
         
         
         

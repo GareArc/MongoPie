@@ -1,7 +1,9 @@
 __all__ = [
     'MongoPieSchemaBase',
-    'FieldVariable'
+    'FieldVariable',
+    'MongoPieModel'
 ]
 
-from mongopie.schema.field_variable import FieldVariable
-from mongopie.schema.mongopie_schema import MongoPieSchemaBase
+from .field_variable import FieldVariable
+from .mongopie_schema import MongoPieSchemaBase
+from .mongopie_model import MongoPieModel

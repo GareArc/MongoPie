@@ -1,5 +1,4 @@
 
-
 class FieldVariable:
     _is_key: bool = False
     _is_unique: bool = False
@@ -7,9 +6,12 @@ class FieldVariable:
     _default_value = None
     
     
-    def __init__(self, name, type): 
+    def __init__(self, name, type: type): 
         self._name = name
         self._type = type
+        
+    def get_type(self) -> type:
+        return self._type
         
     def setAsKey(self) -> 'FieldVariable':
         self._is_key = True

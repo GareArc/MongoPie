@@ -3,5 +3,5 @@ __all__ = [
     'DBConnector'
 ]
 
-from mongopie.client.db_connector import DBConnector
-from mongopie.client.mongopie_client import MongoPieClient
+from .db_connector import DBConnector
+from .mongopie_client import MongoPieClient
