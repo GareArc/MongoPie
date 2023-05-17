@@ -1,11 +1,21 @@
+from typing import Optional
 import pymongo
 from pymongo import MongoClient, database
+from pymongo.server_api import ServerApi
 import pymongo
 
 class DBConnector:
-    def __init__(self, uri: str, db: str=None) -> None:
-        self._client = MongoClient(uri)
+    def __init__(self, db: str, uri: Optional[str]=None, client: Optional[MongoClient]=None) -> None:
+        self._set_client(uri, client)    
         self._db = db
+        
+    def _set_client(self, uri: Optional[str]=None, client: Optional[MongoClient]=None) -> MongoClient:
+        if uri is None and client is not None:
+            self._client = client
+        elif uri is not None and client is None:
+            self._client = MongoClient(uri, server_api=ServerApi('1'))
+        else:
+            raise Exception("Either uri or client must be set")
         
     @property
     def db(self) -> database.Database:
@@ -22,10 +32,10 @@ class DBConnector:
             raise Exception("Collection not found")
         return self.db[collection]
     
-    def set_uri(self, uri: str) -> None:
+    def bind(self, uri: Optional[str]=None, client: Optional[MongoClient]=None) -> None:
         if self._client is not None:
             self._client.close()
-        self._client = MongoClient(uri)
+        self._set_client(uri, client)
     
     
         

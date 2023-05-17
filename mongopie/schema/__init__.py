@@ -1,9 +1,9 @@
 __all__ = [
     'MongoPieSchemaBase',
-    'FieldVariable',
-    'MongoPieModel'
+    'MongoPieModel',
+    'PY_BSON_DICT',
 ]
 
-from .field_variable import FieldVariable
 from .mongopie_schema import MongoPieSchemaBase
 from .mongopie_model import MongoPieModel
+from .type_dict import PY_BSON_DICT

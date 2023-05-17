@@ -11,8 +11,8 @@ def pytest_sessionstart(session):
     from mongopie.client import MongoPieClient
     # Connect to database
     MongoPieClient.connect(
-        os.getenv('MONGODB_URI', 'mongodb://localhost:27017/'), 
-        'db'
+        'db',
+        uri=os.getenv('MONGODB_URI', 'mongodb://localhost:27017/'), 
     )
     print("Connected to database!")
     
