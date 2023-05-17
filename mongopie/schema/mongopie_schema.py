@@ -2,7 +2,6 @@ from dataclasses import fields
 from math import exp
 from typing import Any, Optional, Type
 from bson.objectid import ObjectId
-# from .field_variable import FieldVariable
 from pydantic import BaseModel, Field    
 
 class MongoPieSchemaBase(BaseModel):

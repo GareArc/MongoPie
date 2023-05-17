@@ -1,7 +1,7 @@
 import datetime
 from typing import Any
 from bson import ObjectId
-from mongopie.schema import MongoPieSchemaBase, FieldVariable, MongoPieModel
+from mongopie.schema import MongoPieSchemaBase, MongoPieModel
 from mongopie.client import MongoPieClient
 
 import unittest
